@@ -1,6 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
+var bcrypt = require('bcrypt');
+
+const saltRounds = 10;
+const myPlaintextPassword = 'antont';
+const someOtherPlaintextPassword = 'not_bacon';
 
 var connection = mysql.createConnection({
     host: '127.0.0.1',
@@ -45,30 +50,41 @@ router.get('/logout', function(req, res, next) {
 router.post('/login', function(req, res) {
     var email = req.body.email;
     var password = req.body.password;
+    const saltRounds = 10;
     connection.query('SELECT * FROM tb_user WHERE username = ?', [email], function(error, results, fields) {
         //console.log(results);
         if (error) {
             // console.log("error ocurred",error);
-            res.send({
-                "code": 400,
-                "failed": "error ocurred"
-            })
+            res.send({message: "Email and password wrong1"
+                    })
         } else {
-            console.log('The resuls is: ', results);
+            console.log('The results is: ', results);
+
+            // buat generate pass secara async
+   			// bcrypt.genSalt(saltRounds, function(err, salt) {
+			//     bcrypt.hash(password, salt, function(err, hash) {
+			//         // Store hash in your password DB.
+			//         console.log('dari body '+hash);
+			//     });
+			// });
             if (results.length > 0) {
-                if (results[0].password == password) {
-                    req.session.loggedIn = true;
-                    req.session.namaSession = results[0].username;
-                    req.session.idUser = results[0].id;
-                    req.session.lvlUser = results[0].level;
-                    console.log(req.session.namaSession);
-                    res.redirect('/');
-                } else {
-                    res.send({message: "Email and password wrong"
-                    });
-                }
+            	// langsung compare dri body dengan db secara async
+            	bcrypt.compare(password, results[0].password, function(err, ress) {
+    				console.log(ress);
+    				if(ress){
+    					req.session.loggedIn = true;
+                    	req.session.namaSession = results[0].username;
+                    	req.session.idUser = results[0].id;
+                    	req.session.lvlUser = results[0].level;
+                    	console.log(req.session.namaSession);
+                    	res.redirect('/');
+                	}else{
+                		res.send({message: "Email and password wrong2"
+                    	});
+                	}
+				});
             } else {
-                res.send({message: "Email and password wrong"
+                res.send({message: "Email and password wrong3"
                 });
             }
         }
