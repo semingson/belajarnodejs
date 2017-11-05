@@ -15,5 +15,10 @@ router.get('/profile', function(req, res, next)
 {	
 	res.render('profile',{ title:'Profile'})
 }	);
+router.get('/register', function(req, res, next)
+{	
+	res.render('register',{ title:'Profile'})
+}	);
+
 
 module.exports = router;
