@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var cookieSession = require('cookie-session');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -13,6 +14,16 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+
+// create session 
+// app.set('trust proxy', 1) // trust first proxy
+app.use(cookieSession({
+	name: 'expression',
+    secret: 'keyboard cat',
+    resave: false,
+  	saveUninitialized: true,
+  	cookie: { secure: false }
+}));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -45,5 +56,15 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// buat filter login
+function requireLogin(req, res, next) {
+  if (req.session.loggedIn) {
+    next(); // allow the next route to run
+  } else {
+    // require the user to log in
+    res.redirect("/login"); // or render a form, etc.
+  }
+}
 
 module.exports = app;
