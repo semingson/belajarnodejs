@@ -46,6 +46,12 @@ router.get('/news',function(req, res, next)
 {
     res.render('news',{title:'news'})
 });
+
+router.get('/news1',function(req, res, next)
+{
+    res.render('news1',{title:'news'})
+});
+
 router.get('/logout', function(req, res, next) {
     req.session = null;
     res.redirect('/');
