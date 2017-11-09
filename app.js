@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cookieSession = require('cookie-session');
+var hbs = require('hbs');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -14,6 +15,10 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+
+//register path to partials
+hbs.registerPartials(__dirname + '/views/partials');
+
 
 // create session 
 // app.set('trust proxy', 1) // trust first proxy

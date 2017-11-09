@@ -47,6 +47,11 @@ router.get('/news',function(req, res, next)
     res.render('news',{title:'news'})
 });
 
+router.get('/footer',function(req, res, next)
+{
+    res.render('footer',{title:'footer'})
+});
+
 router.get('/news1',function(req, res, next)
 {
     res.render('news1',{title:'news'})
