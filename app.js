@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cookieSession = require('cookie-session');
 var hbs = require('hbs');
+var hbsutils = require('hbs-utils')(hbs);
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -17,7 +18,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 //register path to partials
-hbs.registerPartials(__dirname + '/views/partials');
+hbsutils.registerPartials(`${__dirname}/views/partials`);
+hbsutils.registerWatchedPartials(`${__dirname}/views/partials`)
 
 
 // create session 
