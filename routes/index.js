@@ -3,10 +3,6 @@ var router = express.Router();
 var mysql = require('mysql');
 var bcrypt = require('bcrypt');
 
-const saltRounds = 10;
-const myPlaintextPassword = 'antont';
-const someOtherPlaintextPassword = 'not_bacon';
-
 var connection = mysql.createConnection({
     host: '127.0.0.1',
     user: 'root',
@@ -66,7 +62,6 @@ router.get('/logout', function(req, res, next) {
 router.post('/login', function(req, res) {
     var email = req.body.email;
     var password = req.body.password;
-    const saltRounds = 10;
     connection.query('SELECT * FROM tb_user WHERE username = ?', [email], function(error, results, fields) {
         //console.log(results);
         if (error) {
@@ -77,6 +72,7 @@ router.post('/login', function(req, res) {
             console.log('The results is: ', results);
 
             // buat generate pass secara async
+            // const saltRounds = 10;
    			// bcrypt.genSalt(saltRounds, function(err, salt) {
 			//     bcrypt.hash(password, salt, function(err, hash) {
 			//         // Store hash in your password DB.
@@ -105,6 +101,10 @@ router.post('/login', function(req, res) {
             }
         }
     });
+});
+
+router.post('/register', function(req, res){
+
 });
 
 module.exports = router;
