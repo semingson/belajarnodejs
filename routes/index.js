@@ -35,7 +35,7 @@ router.get('/profile', function(req, res, next)
 });
 router.get('/register', function(req, res, next)
 {	
-	res.render('register',{ title:'Profile'})
+	res.render('register',{ title:'Register'})
 });
 
 router.get('/news',function(req, res, next)
