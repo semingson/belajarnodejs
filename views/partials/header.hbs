@@ -35,9 +35,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
+            {{#if session.loggedIn}}
             <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="/users/profile">Profil</a>
             </li>
+            {{/if}}
             <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="/news">News</a>
             </li>
