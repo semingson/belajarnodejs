@@ -20,37 +20,37 @@ connection.connect(function(err){
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Express', session: req.session });
 });
 
 router.get('/login', function(req, res, next)
 {
 	console.log(req.session.namaSession);
-	res.render('login',{ title:'Login'})
+	res.render('login',{ title:'Login', session: req.session})
 });
 
 router.get('/profile', function(req, res, next)
 {	
-	res.render('profile',{ title:'Profile'})
+	res.render('profile',{ title:'Profile', session: req.session})
 });
 router.get('/register', function(req, res, next)
 {	
-	res.render('register',{ title:'Register'})
+	res.render('register',{ title:'Register', session: req.session})
 });
 
 router.get('/news',function(req, res, next)
 {
-    res.render('news',{title:'news'})
+    res.render('news',{title:'news', session: req.session})
 });
 
 router.get('/footer',function(req, res, next)
 {
-    res.render('footer',{title:'footer'})
+    res.render('footer',{title:'footer', session: req.session})
 });
 
 router.get('/news1',function(req, res, next)
 {
-    res.render('news1',{title:'news'})
+    res.render('news1',{title:'news', session: req.session})
 });
 
 router.get('/logout', function(req, res, next) {

@@ -45,8 +45,8 @@ app.use('/font-awesome', express.static (`${__dirname}/node_modules/font-awesome
 app.use('/jquery', express.static (`${__dirname}/node_modules/jquery/dist`));
 
 app.use('/', index);
-app.use('/users', users);
-app.use('/admin', requireLogin, admin);
+app.use('/users', requireLogin,users);
+app.use('/admin', requireLoginAdmin, admin);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -69,6 +69,15 @@ app.use(function(err, req, res, next) {
 // buat filter login
 function requireLogin(req, res, next) {
   if (req.session.loggedIn) {
+    next(); // allow the next route to run
+  } else {
+    // require the user to log in
+    res.redirect("/login"); // or render a form, etc.
+  }
+}
+
+function requireLoginAdmin(req, res, next) {
+  if (req.session.loggedIn && req.session.lvlUser == 2) {
     next(); // allow the next route to run
   } else {
     // require the user to log in
