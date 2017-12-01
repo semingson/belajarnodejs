@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/profile', function(req, res, next)
 {	
-	res.render('profile',{ title:'Profile'})
+	res.render('profile',{ title:'Profile', session: req.session})
 });
 
 module.exports = router;
